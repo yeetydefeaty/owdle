@@ -30,12 +30,22 @@ body::before {
     z-index: -1;
 }
 
+/* Main wrapper for game and ads */
+.main-wrapper {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 20px;
+    padding: 0 20px;
+    min-height: calc(100vh - 120px); /* Account for top/bottom ads */
+}
+
 /* Main container */
 .container {
-    max-width: 1200px;
+    flex: 1;
+    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -435,17 +445,8 @@ header h1 {
 }
 
 /* Ad containers */
-.ads-container {
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-}
-
-.ad-banner {
+.ad-banner-top {
     width: 100%;
-    max-width: 728px;
     height: 90px;
     background: rgba(255, 255, 255, 0.1);
     border: 2px dashed rgba(255, 255, 255, 0.3);
@@ -457,9 +458,27 @@ header h1 {
     font-size: 14px;
     text-align: center;
     backdrop-filter: blur(5px);
+    margin-bottom: 20px;
 }
 
-.ad-sidebar {
+.ad-banner-bottom {
+    width: 100%;
+    height: 90px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    text-align: center;
+    backdrop-filter: blur(5px);
+    margin-top: 20px;
+}
+
+.ad-sidebar-left,
+.ad-sidebar-right {
     width: 300px;
     height: 600px;
     background: rgba(255, 255, 255, 0.1);
@@ -472,12 +491,32 @@ header h1 {
     font-size: 14px;
     text-align: center;
     backdrop-filter: blur(5px);
+    position: sticky;
+    top: 20px;
+    align-self: start;
 }
 
 /* Responsive design */
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
+    .main-wrapper {
+        flex-direction: column;
+        padding: 0 15px;
+    }
+    
+    .ad-sidebar-left,
+    .ad-sidebar-right {
+        display: none; /* Hide sidebar ads on smaller screens */
+    }
+    
     .container {
         padding: 15px;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-wrapper {
+        padding: 0 10px;
     }
     
     header h1 {
@@ -510,34 +549,9 @@ header h1 {
         grid-template-columns: 1fr;
     }
     
-    .ad-banner {
+    .ad-banner-top,
+    .ad-banner-bottom {
         height: 50px;
-        max-width: 320px;
-    }
-    
-    .ad-sidebar {
-        width: 100%;
-        max-width: 320px;
-        height: 250px;
-    }
-}
-
-@media (min-width: 1200px) {
-    .container {
-        display: grid;
-        grid-template-columns: 1fr 300px;
-        gap: 30px;
-        max-width: 1400px;
-    }
-    
-    .ad-sidebar {
-        position: sticky;
-        top: 20px;
-        height: 400px;
-        align-self: start;
-    }
-    
-    .ads-container {
-        grid-column: 1 / -1;
+        margin: 10px 0;
     }
 } 

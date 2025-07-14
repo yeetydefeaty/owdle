@@ -31,17 +31,21 @@ class AdManager {
     initAdContainers() {
         // Initialize ad containers with placeholder content
         const adBannerTop = document.getElementById('adBannerTop');
-        const adSidebar = document.getElementById('adSidebar');
+        const adSidebarLeft = document.getElementById('adSidebarLeft');
+        const adSidebarRight = document.getElementById('adSidebarRight');
         const adBannerBottom = document.getElementById('adBannerBottom');
 
         if (adBannerTop) {
-            adBannerTop.innerHTML = '<div>Ad Banner (Top)</div>';
+            adBannerTop.innerHTML = '<div>Top Banner Ad</div>';
         }
-        if (adSidebar) {
-            adSidebar.innerHTML = '<div>Sidebar Ad</div>';
+        if (adSidebarLeft) {
+            adSidebarLeft.innerHTML = '<div>Left Sidebar Ad</div>';
+        }
+        if (adSidebarRight) {
+            adSidebarRight.innerHTML = '<div>Right Sidebar Ad</div>';
         }
         if (adBannerBottom) {
-            adBannerBottom.innerHTML = '<div>Ad Banner (Bottom)</div>';
+            adBannerBottom.innerHTML = '<div>Bottom Banner Ad</div>';
         }
     }
 
@@ -55,16 +59,23 @@ class AdManager {
             'full-width-responsive': 'true'
         });
 
-        // Sidebar Ad
-        this.createAdSenseAd('adSidebar', {
+        // Left Sidebar Ad
+        this.createAdSenseAd('adSidebarLeft', {
             'ad-slot': 'YOUR_AD_SLOT_ID_2',
+            'ad-format': 'auto',
+            'full-width-responsive': 'true'
+        });
+
+        // Right Sidebar Ad
+        this.createAdSenseAd('adSidebarRight', {
+            'ad-slot': 'YOUR_AD_SLOT_ID_3',
             'ad-format': 'auto',
             'full-width-responsive': 'true'
         });
 
         // Bottom Banner Ad
         this.createAdSenseAd('adBannerBottom', {
-            'ad-slot': 'YOUR_AD_SLOT_ID_3',
+            'ad-slot': 'YOUR_AD_SLOT_ID_4',
             'ad-format': 'auto',
             'full-width-responsive': 'true'
         });
@@ -154,7 +165,7 @@ class SimpleAdManager {
 
     setupAdContainers() {
         // Add placeholder content for development
-        const containers = document.querySelectorAll('.ad-banner, .ad-sidebar');
+        const containers = document.querySelectorAll('.ad-banner-top, .ad-banner-bottom, .ad-sidebar-left, .ad-sidebar-right');
         containers.forEach(container => {
             container.innerHTML = `
                 <div style="padding: 20px; text-align: center;">
