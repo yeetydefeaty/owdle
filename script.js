@@ -586,33 +586,45 @@ function hasPlayedToday() {
     const lastPlayedDate = localStorage.getItem('owdleLastPlayedDate');
     const today = new Date().toISOString().split('T')[0];
     
-    return lastPlayedDate === today;
+    // Also check if there are saved guesses for today
+    const savedGuessedHeroes = localStorage.getItem('owdleGuessedHeroes');
+    const hasGuesses = savedGuessedHeroes && JSON.parse(savedGuessedHeroes).length > 0;
+    
+    console.log('hasPlayedToday check:', { lastPlayedDate, today, hasGuesses });
+    
+    return lastPlayedDate === today || hasGuesses;
 }
 
 // Load previous game state when player has already played today
 function loadPreviousGameState() {
+    console.log('Loading previous game state...');
+    
     // Load saved game state from localStorage
     const savedGuessedHeroes = localStorage.getItem('owdleGuessedHeroes');
     const savedGameWon = localStorage.getItem('owdleGameWon');
     const savedGameOver = localStorage.getItem('owdleGameOver');
+    const savedGuessesDisplay = localStorage.getItem('owdleGuessesDisplay');
+    
+    console.log('Saved state:', { savedGuessedHeroes, savedGameWon, savedGameOver, savedGuessesDisplay });
     
     if (savedGuessedHeroes) {
         guessedHeroes = JSON.parse(savedGuessedHeroes);
+        console.log('Loaded guessedHeroes:', guessedHeroes);
     }
     
     if (savedGameWon) {
         gameWon = JSON.parse(savedGameWon);
+        console.log('Loaded gameWon:', gameWon);
     }
     
     if (savedGameOver) {
         gameOver = JSON.parse(savedGameOver);
+        console.log('Loaded gameOver:', gameOver);
     }
-    
-    // Load saved guesses display
-    const savedGuessesDisplay = localStorage.getItem('owdleGuessesDisplay');
     
     // Always restore guesses display if available (regardless of game state)
     if (savedGuessesDisplay) {
+        console.log('Restoring guesses display...');
         const guessesContainer = document.getElementById('guessesContainer');
         if (guessesContainer) {
             guessesContainer.remove();
@@ -627,6 +639,7 @@ function loadPreviousGameState() {
     
     // Set game state
     if (gameOver) {
+        console.log('Game is over, showing final results...');
         // Show final results
         showFinalResults();
     }
@@ -643,6 +656,8 @@ function loadPreviousGameState() {
     if (dailyIndicator) {
         dailyIndicator.textContent = 'Already played today';
     }
+    
+    console.log('Previous game state loaded successfully');
 }
 
 // Start a new game
@@ -675,10 +690,14 @@ function startNewGame() {
     localStorage.setItem('owdleCurrentHero', currentHero.name);
     
     // Check if player has already played today
+    console.log('Checking if player has already played today...');
     if (hasPlayedToday()) {
+        console.log('Player has already played today, loading previous state...');
         // Load previous game state
         loadPreviousGameState();
         return;
+    } else {
+        console.log('Player has not played today, starting new game...');
     }
     
     // Reset game state for new game
@@ -917,6 +936,9 @@ function makeGuess(hero) {
     localStorage.setItem('owdleGameWon', JSON.stringify(gameWon));
     localStorage.setItem('owdleGameOver', JSON.stringify(gameOver));
     
+    // Set last played date to today
+    localStorage.setItem('owdleLastPlayedDate', new Date().toISOString().split('T')[0]);
+    
     // Save guesses display to localStorage
     const guessesContainer = document.getElementById('guessesContainer');
     if (guessesContainer) {
@@ -1067,3 +1089,19 @@ function main() {
 
 // Start the game
 document.addEventListener('DOMContentLoaded', main);
+
+// Debug function to check localStorage state
+function debugGameState() {
+    console.log('=== DEBUG GAME STATE ===');
+    console.log('Last played date:', localStorage.getItem('owdleLastPlayedDate'));
+    console.log('Current hero:', localStorage.getItem('owdleCurrentHero'));
+    console.log('Guessed heroes:', localStorage.getItem('owdleGuessedHeroes'));
+    console.log('Game won:', localStorage.getItem('owdleGameWon'));
+    console.log('Game over:', localStorage.getItem('owdleGameOver'));
+    console.log('Guesses display:', localStorage.getItem('owdleGuessesDisplay'));
+    console.log('Has played today:', hasPlayedToday());
+    console.log('========================');
+}
+
+// Make debug function available globally
+window.debugGameState = debugGameState;
