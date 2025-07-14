@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OWDLE - Overwatch 2 Hero Guessing Game</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff6b35">
+    <meta name="description" content="Daily Overwatch 2 hero guessing game. Guess the hero of the day using hints about their role, gender, origin, and release year!">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -58,8 +61,24 @@
                 <span class="stat-value" id="currentStreak">0</span>
             </div>
         </div>
+        
+        <!-- Ad Containers -->
+        <div class="ads-container">
+            <div class="ad-banner" id="adBannerTop">
+                <!-- AdSense code will go here -->
+            </div>
+            
+            <div class="ad-sidebar" id="adSidebar">
+                <!-- Sidebar ad will go here -->
+            </div>
+            
+            <div class="ad-banner" id="adBannerBottom">
+                <!-- Bottom banner ad will go here -->
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
+    <script src="ads.js"></script>
 </body>
 </html> 

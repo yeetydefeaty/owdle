@@ -838,6 +838,11 @@ function makeGuess(hero) {
     saveStats();
     updateStatsDisplay();
     updateDailyIndicator();
+    
+    // Show ads after game completion
+    if (window.adManager && window.adManager.showAdsAfterGame) {
+        window.adManager.showAdsAfterGame();
+    }
 }
 
 // Display a guess with hints
