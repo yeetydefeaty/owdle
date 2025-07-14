@@ -589,6 +589,62 @@ function hasPlayedToday() {
     return lastPlayedDate === today;
 }
 
+// Load previous game state when player has already played today
+function loadPreviousGameState() {
+    // Load saved game state from localStorage
+    const savedGuessedHeroes = localStorage.getItem('owdleGuessedHeroes');
+    const savedGameWon = localStorage.getItem('owdleGameWon');
+    const savedGameOver = localStorage.getItem('owdleGameOver');
+    
+    if (savedGuessedHeroes) {
+        guessedHeroes = JSON.parse(savedGuessedHeroes);
+    }
+    
+    if (savedGameWon) {
+        gameWon = JSON.parse(savedGameWon);
+    }
+    
+    if (savedGameOver) {
+        gameOver = JSON.parse(savedGameOver);
+    }
+    
+    // Load saved guesses display
+    const savedGuessesDisplay = localStorage.getItem('owdleGuessesDisplay');
+    
+    // Set game state
+    if (gameOver) {
+        // Show final results
+        showFinalResults();
+        
+        // Restore guesses display if available
+        if (savedGuessesDisplay) {
+            const guessesContainer = document.getElementById('guessesContainer');
+            if (guessesContainer) {
+                guessesContainer.remove();
+            }
+            
+            const newGuessesContainer = document.createElement('div');
+            newGuessesContainer.id = 'guessesContainer';
+            newGuessesContainer.className = 'guesses-container';
+            newGuessesContainer.innerHTML = savedGuessesDisplay;
+            document.querySelector('.game-container').insertBefore(newGuessesContainer, document.querySelector('.guess-section'));
+        }
+    }
+    
+    // Update guess counter
+    updateGuessCounter();
+    
+    // Disable search input to prevent further guesses
+    heroSearch.disabled = true;
+    heroSearch.placeholder = 'You\'ve already played today!';
+    
+    // Update daily indicator to show "Already played"
+    const dailyIndicator = document.getElementById('dailyIndicator');
+    if (dailyIndicator) {
+        dailyIndicator.textContent = 'Already played today';
+    }
+}
+
 // Start a new game
 function startNewGame() {
     // Check if we need a new daily hero
@@ -596,6 +652,12 @@ function startNewGame() {
         // New day, get today's hero
         currentHero = getTodaysHero();
         localStorage.setItem('owdleLastPlayedDate', new Date().toISOString().split('T')[0]);
+        
+        // Clear saved game state for new day
+        localStorage.removeItem('owdleGuessedHeroes');
+        localStorage.removeItem('owdleGameWon');
+        localStorage.removeItem('owdleGameOver');
+        localStorage.removeItem('owdleGuessesDisplay');
         
         // Don't reset streak here - it will be handled in makeGuess when the game ends
     } else {
@@ -612,7 +674,14 @@ function startNewGame() {
     // Save current hero to localStorage
     localStorage.setItem('owdleCurrentHero', currentHero.name);
     
-    // Reset game state
+    // Check if player has already played today
+    if (hasPlayedToday()) {
+        // Load previous game state
+        loadPreviousGameState();
+        return;
+    }
+    
+    // Reset game state for new game
     guesses = [];
     guessedHeroes = []; // Reset guessed heroes
     gameWon = false;
@@ -621,10 +690,10 @@ function startNewGame() {
     // Reset UI
     heroImage.innerHTML = '<div class="silhouette"></div>';
     revealButton.classList.remove('show');
-    // selectedHeroDiv.innerHTML = '<p>Select a hero to make your guess</p>'; // This line was removed
-    // guessButton.disabled = true; // This line was removed
     resultsSection.style.display = 'none';
     heroSearch.value = '';
+    heroSearch.disabled = false;
+    heroSearch.placeholder = 'Search for a hero...';
     searchResults.style.display = 'none';
     
     // Update guess counter
@@ -800,7 +869,10 @@ function handleKeyPress(event) {
 
 // Make a guess
 function makeGuess(hero) {
-    if (gameOver) return;
+    // Check if game is over or if player has already played today
+    if (gameOver || hasPlayedToday()) {
+        return; // Don't allow guesses if game is over or already played today
+    }
     
     // Check if hero was already guessed
     if (guessedHeroes.includes(hero.name)) {
@@ -839,6 +911,17 @@ function makeGuess(hero) {
     
     // Update guess counter after each guess
     updateGuessCounter();
+    
+    // Save game state to localStorage
+    localStorage.setItem('owdleGuessedHeroes', JSON.stringify(guessedHeroes));
+    localStorage.setItem('owdleGameWon', JSON.stringify(gameWon));
+    localStorage.setItem('owdleGameOver', JSON.stringify(gameOver));
+    
+    // Save guesses display to localStorage
+    const guessesContainer = document.getElementById('guessesContainer');
+    if (guessesContainer) {
+        localStorage.setItem('owdleGuessesDisplay', guessesContainer.innerHTML);
+    }
     
     // Only increment games played if this is a new day or the player hasn't played today yet
     if (!hasPlayedToday()) {
