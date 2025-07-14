@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWDLE - Overwatch 2 Hero Guessing Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>OWDLE</h1>
+            <p class="subtitle">Guess the Overwatch 2 Hero</p>
+            <p class="daily-indicator" id="dailyIndicator">Daily Challenge</p>
+            <div class="guess-counter">
+                <span id="guessesRemaining">6</span> guesses remaining
+            </div>
+        </header>
+
+        <div class="game-container">
+            <div class="hero-image-container">
+                <div class="hero-image" id="heroImage">
+                    <div class="silhouette"></div>
+                </div>
+                <div class="reveal-button" id="revealButton">
+                    <span>Reveal Hero</span>
+                </div>
+            </div>
+
+            <div class="guess-section">
+                <div class="search-container">
+                    <input type="text" id="heroSearch" placeholder="Search for a hero..." autocomplete="off">
+                    <div id="searchResults" class="search-results"></div>
+                </div>
+            </div>
+
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="result-message" id="resultMessage"></div>
+                <div class="hero-details" id="heroDetails"></div>
+                <button class="new-game-button" id="newGameButton">
+                    New Game
+                </button>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-label">Games Played</span>
+                <span class="stat-value" id="gamesPlayed">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Win Rate</span>
+                <span class="stat-value" id="winRate">0%</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Current Streak</span>
+                <span class="stat-value" id="currentStreak">0</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,215 @@
+/* Background styling */
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-image: url('/owdle/images/bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+/* Add overlay for better text readability */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: -1;
+}
+
+/* Ensure game container has proper contrast */
+.game-container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Guess animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.guess-hero {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    transform: translateY(10px);
+}
+
+.hint-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 6px;
+    min-width: 80px;
+    text-align: center;
+    transform: translateY(10px);
+}
+
+.hint-item:nth-child(1) {
+    animation-delay: 0.25s;
+}
+
+.hint-item:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.hint-item:nth-child(3) {
+    animation-delay: 0.75s;
+}
+
+.hint-item:nth-child(4) {
+    animation-delay: 1s;
+}
+
+/* Ensure elements start invisible */
+.guess-hero,
+.hint-item {
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.guess-hero img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #333;
+}
+
+.hero-name {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+}
+
+.guess-hints {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.hint-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 6px;
+    min-width: 80px;
+    text-align: center;
+}
+
+.hint-label {
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.hint-value {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Hint colors */
+.hint-item.correct {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.hint-item.incorrect {
+    background-color: #f44336;
+    color: white;
+}
+
+.hint-item.partial {
+    background-color: #FF9800;
+    color: white;
+}
+
+/* Daily indicator styling */
+.daily-indicator {
+    background: linear-gradient(135deg, #ff6b35, #f7931e);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    margin: 10px auto;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Hero detail styling */
+.hero-detail {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.hero-detail img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #333;
+}
+
+.hero-detail h3 {
+    margin: 0 0 5px 0;
+    color: #333;
+}
+
+.hero-detail p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.search-result-item.already-guessed {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #f5f5f5;
+    color: #999;
+}
+
+.search-result-item.already-guessed:hover {
+    background-color: #f5f5f5;
+    transform: none;
+}
+
+.already-guessed-text {
+    font-size: 12px;
+    color: #ff4444;
+    font-style: italic;
+    margin-left: auto;
+} 
