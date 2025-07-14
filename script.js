@@ -932,13 +932,13 @@ function revealHero() {
 function shareResult() {
     const guesses = guessedHeroes.length;
     const result = gameWon ? 'Won' : 'Lost';
-    const shareText = `OWDLE ${result} in ${guesses}/6\n\n${currentHero.name}\nRole: ${currentHero.role}\nGender: ${currentHero.gender}\nOrigin: ${currentHero.origin}\nYear: ${currentHero.releaseYear}\n\nPlay at: https://yeetydefeaty.github.io/owdle`;
+    const shareText = `OWDLE ${result} in ${guesses}/6\n\n${currentHero.name}\nRole: ${currentHero.role}\nGender: ${currentHero.gender}\nOrigin: ${currentHero.origin}\nYear: ${currentHero.releaseYear}\n\nPlay at: https://owdle.net`;
     
     if (navigator.share) {
         navigator.share({
             title: 'OWDLE Result',
             text: shareText,
-            url: 'https://yeetydefeaty.github.io/owdle'
+            url: 'https://owdle.net'
         });
     } else {
         // Fallback: copy to clipboard

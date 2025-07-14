@@ -31,6 +31,7 @@ A daily Overwatch 2 hero guessing game inspired by Wordle and Loldle. Guess the 
 3. Go to Settings → Pages → Source → Deploy from branch
 4. Select `main` branch and save
 5. Your site will be available at `https://yourusername.github.io/repository-name`
+6. For custom domain: Add CNAME file and configure DNS
 
 ### Netlify (Free)
 1. Go to [netlify.com](https://netlify.com)
@@ -48,6 +49,10 @@ A daily Overwatch 2 hero guessing game inspired by Wordle and Loldle. Guess the 
 2. Open `index.html` in your browser, or
 3. Run a local server: `python3 -m http.server 8000`
 4. Visit `http://localhost:8000`
+
+## 🌐 Live Site
+
+**Play OWDLE:** https://owdle.net
 
 ## 📁 Project Structure
 

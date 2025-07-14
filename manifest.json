@@ -2,7 +2,7 @@
   "name": "OWDLE - Overwatch 2 Hero Guessing Game",
   "short_name": "OWDLE",
   "description": "Daily Overwatch 2 hero guessing game",
-  "start_url": "/",
+  "start_url": "https://owdle.net",
   "display": "standalone",
   "background_color": "#667eea",
   "theme_color": "#ff6b35",
