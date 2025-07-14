@@ -552,7 +552,7 @@ function updateDailyIndicator() {
         const minutes = Math.floor((timeUntilNext % (1000 * 60 * 60)) / (1000 * 60));
         
         if (hasPlayedToday()) {
-            dailyIndicator.textContent = `Next hero in ${hours}h ${minutes}m`;
+            dailyIndicator.textContent = `Already played today - Next hero in ${hours}h ${minutes}m`;
         } else {
             dailyIndicator.textContent = 'Daily Challenge';
         }
@@ -611,24 +611,24 @@ function loadPreviousGameState() {
     // Load saved guesses display
     const savedGuessesDisplay = localStorage.getItem('owdleGuessesDisplay');
     
+    // Always restore guesses display if available (regardless of game state)
+    if (savedGuessesDisplay) {
+        const guessesContainer = document.getElementById('guessesContainer');
+        if (guessesContainer) {
+            guessesContainer.remove();
+        }
+        
+        const newGuessesContainer = document.createElement('div');
+        newGuessesContainer.id = 'guessesContainer';
+        newGuessesContainer.className = 'guesses-container';
+        newGuessesContainer.innerHTML = savedGuessesDisplay;
+        document.querySelector('.game-container').insertBefore(newGuessesContainer, document.querySelector('.guess-section'));
+    }
+    
     // Set game state
     if (gameOver) {
         // Show final results
         showFinalResults();
-        
-        // Restore guesses display if available
-        if (savedGuessesDisplay) {
-            const guessesContainer = document.getElementById('guessesContainer');
-            if (guessesContainer) {
-                guessesContainer.remove();
-            }
-            
-            const newGuessesContainer = document.createElement('div');
-            newGuessesContainer.id = 'guessesContainer';
-            newGuessesContainer.className = 'guesses-container';
-            newGuessesContainer.innerHTML = savedGuessesDisplay;
-            document.querySelector('.game-container').insertBefore(newGuessesContainer, document.querySelector('.guess-section'));
-        }
     }
     
     // Update guess counter
