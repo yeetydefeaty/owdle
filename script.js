@@ -656,6 +656,9 @@ function loadPreviousGameState() {
 
 // Start a new game
 function startNewGame() {
+    // Always enable the search input at the start of a new game
+    heroSearch.disabled = false;
+    heroSearch.placeholder = 'Search for a hero...';
     // Check if we need a new daily hero
     if (shouldStartNewDailyGame()) {
         // New day, get today's hero
