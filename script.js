@@ -585,24 +585,8 @@ function shouldStartNewDailyGame() {
 function hasPlayedToday() {
     const lastPlayedDate = localStorage.getItem('owdleLastPlayedDate');
     const today = new Date().toISOString().split('T')[0];
-    
-    // Also check if there are saved guesses for today
-    const savedGuessedHeroes = localStorage.getItem('owdleGuessedHeroes');
-    let hasGuesses = false;
-    
-    try {
-        if (savedGuessedHeroes) {
-            const parsed = JSON.parse(savedGuessedHeroes);
-            hasGuesses = Array.isArray(parsed) && parsed.length > 0;
-        }
-    } catch (e) {
-        console.error('Error parsing savedGuessedHeroes:', e);
-        hasGuesses = false;
-    }
-    
-    console.log('hasPlayedToday check:', { lastPlayedDate, today, hasGuesses, savedGuessedHeroes });
-    
-    return lastPlayedDate === today || hasGuesses;
+    console.log('hasPlayedToday check:', { lastPlayedDate, today });
+    return lastPlayedDate === today;
 }
 
 // Load previous game state when player has already played today
