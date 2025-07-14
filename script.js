@@ -436,7 +436,7 @@ const heroes = [
 let currentHero;
 let guesses = [];
 let guessedHeroes = []; // Track guessed heroes
-let guessesMade = 0;
+
 let maxGuesses = 6;
 let gameWon = false;
 let gameOver = false;
@@ -514,8 +514,15 @@ function loadStats() {
     const savedStats = localStorage.getItem('owdleStats');
     if (savedStats) {
         gameStats = JSON.parse(savedStats);
-        updateStatsDisplay();
+    } else {
+        // Initialize default stats if none exist
+        gameStats = {
+            gamesPlayed: 0,
+            gamesWon: 0,
+            currentStreak: 0
+        };
     }
+    updateStatsDisplay();
 }
 
 // Save stats to localStorage
@@ -634,7 +641,7 @@ function startNewGame() {
 
 // Update guess counter display
 function updateGuessCounter() {
-    const remaining = maxGuesses - guesses.length;
+    const remaining = maxGuesses - guessedHeroes.length;
     guessesRemainingSpan.textContent = remaining;
     
     // Change color based on remaining guesses
@@ -820,8 +827,7 @@ function makeGuess(hero) {
         gameStats.currentStreak++;
         showFinalResults();
     } else {
-        guessesMade++;
-        if (guessesMade >= maxGuesses) {
+        if (guessedHeroes.length >= maxGuesses) {
             gameOver = true;
             // Only reset streak if this is a new day and the player lost
             if (shouldStartNewDailyGame()) {
@@ -830,6 +836,9 @@ function makeGuess(hero) {
             showFinalResults();
         }
     }
+    
+    // Update guess counter after each guess
+    updateGuessCounter();
     
     // Only increment games played if this is a new day or the player hasn't played today yet
     if (!hasPlayedToday()) {
