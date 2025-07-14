@@ -396,21 +396,46 @@ header h1 {
     margin-bottom: 8px;
 }
 
-.new-game-button {
-    background: linear-gradient(135deg, #ff6b35, #f7931e);
+.daily-complete-message {
+    margin-top: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 15px;
+    text-align: center;
+}
+
+.daily-complete-message p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.share-section {
+    margin-top: 20px;
+}
+
+.share-section p {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.share-button {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
     color: white;
     border: none;
-    padding: 15px 30px;
+    padding: 12px 24px;
     border-radius: 25px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.new-game-button:hover {
+.share-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
 }
 
 /* Stats section */

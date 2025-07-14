@@ -456,7 +456,7 @@ let resultMessage;
 let heroDetails;
 let resultsSection;
 let revealButton;
-let newGameButton;
+
 let gamesPlayedSpan;
 let winRateSpan;
 let currentStreakSpan;
@@ -472,7 +472,6 @@ function initGame() {
     heroDetails = document.getElementById('heroDetails');
     resultsSection = document.getElementById('resultsSection');
     revealButton = document.getElementById('revealButton');
-    newGameButton = document.getElementById('newGameButton');
     gamesPlayedSpan = document.getElementById('gamesPlayed');
     winRateSpan = document.getElementById('winRate');
     currentStreakSpan = document.getElementById('currentStreak');
@@ -492,9 +491,10 @@ function initGame() {
     // Reveal button
     revealButton.addEventListener('click', revealHero);
     
-    // New game button
-    if (newGameButton) {
-        newGameButton.addEventListener('click', startNewGame);
+    // Share button
+    const shareButton = document.getElementById('shareButton');
+    if (shareButton) {
+        shareButton.addEventListener('click', shareResult);
     }
     
     // Load stats
@@ -925,6 +925,29 @@ function revealHero() {
         revealButton.classList.add('show');
         heroSearch.value = '';
         searchResults.style.display = 'none';
+    }
+}
+
+// Share result function
+function shareResult() {
+    const guesses = guessedHeroes.length;
+    const result = gameWon ? 'Won' : 'Lost';
+    const shareText = `OWDLE ${result} in ${guesses}/6\n\n${currentHero.name}\nRole: ${currentHero.role}\nGender: ${currentHero.gender}\nOrigin: ${currentHero.origin}\nYear: ${currentHero.releaseYear}\n\nPlay at: https://yeetydefeaty.github.io/owdle`;
+    
+    if (navigator.share) {
+        navigator.share({
+            title: 'OWDLE Result',
+            text: shareText,
+            url: 'https://yeetydefeaty.github.io/owdle'
+        });
+    } else {
+        // Fallback: copy to clipboard
+        navigator.clipboard.writeText(shareText).then(() => {
+            alert('Result copied to clipboard!');
+        }).catch(() => {
+            // Final fallback: show text
+            prompt('Copy this result:', shareText);
+        });
     }
 }
 
