@@ -588,9 +588,19 @@ function hasPlayedToday() {
     
     // Also check if there are saved guesses for today
     const savedGuessedHeroes = localStorage.getItem('owdleGuessedHeroes');
-    const hasGuesses = savedGuessedHeroes && JSON.parse(savedGuessedHeroes).length > 0;
+    let hasGuesses = false;
     
-    console.log('hasPlayedToday check:', { lastPlayedDate, today, hasGuesses });
+    try {
+        if (savedGuessedHeroes) {
+            const parsed = JSON.parse(savedGuessedHeroes);
+            hasGuesses = Array.isArray(parsed) && parsed.length > 0;
+        }
+    } catch (e) {
+        console.error('Error parsing savedGuessedHeroes:', e);
+        hasGuesses = false;
+    }
+    
+    console.log('hasPlayedToday check:', { lastPlayedDate, today, hasGuesses, savedGuessedHeroes });
     
     return lastPlayedDate === today || hasGuesses;
 }
@@ -932,17 +942,23 @@ function makeGuess(hero) {
     updateGuessCounter();
     
     // Save game state to localStorage
+    console.log('Saving game state:', { guessedHeroes, gameWon, gameOver });
     localStorage.setItem('owdleGuessedHeroes', JSON.stringify(guessedHeroes));
     localStorage.setItem('owdleGameWon', JSON.stringify(gameWon));
     localStorage.setItem('owdleGameOver', JSON.stringify(gameOver));
     
     // Set last played date to today
-    localStorage.setItem('owdleLastPlayedDate', new Date().toISOString().split('T')[0]);
+    const today = new Date().toISOString().split('T')[0];
+    localStorage.setItem('owdleLastPlayedDate', today);
+    console.log('Set last played date to:', today);
     
     // Save guesses display to localStorage
     const guessesContainer = document.getElementById('guessesContainer');
     if (guessesContainer) {
         localStorage.setItem('owdleGuessesDisplay', guessesContainer.innerHTML);
+        console.log('Saved guesses display');
+    } else {
+        console.log('No guesses container found to save');
     }
     
     // Only increment games played if this is a new day or the player hasn't played today yet
